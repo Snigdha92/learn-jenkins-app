@@ -94,12 +94,15 @@ pipeline {
                 '''
             }
         }
-     stage('Approval') {
-                  steps {
-                      timeout(time: 1, unit: 'MINUTES') 
-                      input message: 'Ready to deploy?', ok: 'Yes, I am sure I want to deploy!'
+
+        stage('Approval') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: 'Do you wish to deploy to production?', ok: 'Yes, I am sure!'
                 }
             }
+        }
+
         stage('Deploy prod') {
             agent {
                 docker {
@@ -117,7 +120,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage('Prod E2E') {
             agent {
                 docker {
@@ -125,7 +128,7 @@ pipeline {
                     reuseNode true
                 }
             }
-
+*/
             environment {
                 CI_ENVIRONMENT_URL = '2ec10204-01f0-4172-8443-031d023cf50d'
             }
@@ -143,5 +146,4 @@ pipeline {
             }
         }
     }
-}
 }
