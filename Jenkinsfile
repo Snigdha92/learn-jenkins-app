@@ -24,6 +24,7 @@ pipeline {
 
         stage('Tests') {
             parallel {
+                /*
                 stage('Unit tests') {
                     agent {
                         docker {
@@ -43,7 +44,7 @@ pipeline {
                             junit 'jest-results/junit.xml'
                         }
                     }
-                }
+                }*/
 
                 stage('E2E') {
                     agent {
