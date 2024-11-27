@@ -120,7 +120,7 @@ pipeline {
                 '''
             }
         }
-/*
+
         stage('Prod E2E') {
             agent {
                 docker {
@@ -128,7 +128,7 @@ pipeline {
                     reuseNode true
                 }
             }
-*/
+
             environment {
                 CI_ENVIRONMENT_URL = '2ec10204-01f0-4172-8443-031d023cf50d'
             }
@@ -146,4 +146,4 @@ pipeline {
             }
         }
     }
-
+}
