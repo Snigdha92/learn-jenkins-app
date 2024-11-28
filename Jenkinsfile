@@ -44,14 +44,8 @@ pipeline {
                             npm test
                         '''
                     }
-                    /*
-                    post {
-                        always {
-                            junit 'jest-results/junit.xml'
-                        }
-                    }*/
-                }
-/*
+               }
+
                 stage('E2E') {
                     agent {
                         docker {
@@ -68,7 +62,7 @@ pipeline {
                             npx playwright test  --reporter=html
                         '''
                     }
-*/
+
                     post {
                         always {
                             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Local', reportTitles: '', useWrapperFileDirectly: true])
@@ -122,7 +116,7 @@ pipeline {
                 '''
             }
         }
-/*
+
         stage('Prod E2E') {
             agent {
                 docker {
@@ -130,7 +124,7 @@ pipeline {
                     reuseNode true
                 }
             }
-*/
+
             environment {
                 CI_ENVIRONMENT_URL = 'https://peaceful-daffodil-303af5.netlify.app'
             }
@@ -147,5 +141,5 @@ pipeline {
                 }
             }
         }
-    
-
+    }
+}
