@@ -29,7 +29,7 @@ pipeline {
 
         stage('Tests') {
             parallel {
-/*
+
                 stage('Unit tests') {
                     agent {
                         docker {
@@ -44,13 +44,14 @@ pipeline {
                             npm test
                         '''
                     }
+                    /*
                     post {
                         always {
                             junit 'jest-results/junit.xml'
                         }
-                    }
+                    }*/
                 }
-*/
+/*
                 stage('E2E') {
                     agent {
                         docker {
@@ -67,7 +68,7 @@ pipeline {
                             npx playwright test  --reporter=html
                         '''
                     }
-
+*/
                     post {
                         always {
                             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Local', reportTitles: '', useWrapperFileDirectly: true])
@@ -86,11 +87,12 @@ pipeline {
             }
             steps {
                 sh '''
-                    npm install netlify-cli
+                    npm install netlify-cli node-jq
                     node_modules/.bin/netlify --version
                     echo "Deploying to staging. Site ID: $NETLIFY_SITE_ID"
                     node_modules/.bin/netlify status
-                    node_modules/.bin/netlify deploy --dir=build
+                    node_modules/.bin/netlify deploy --dir=build --json > deploy-output.json
+                    node_modules/.bin/node-jq -r '.deploy_url' deploy-output.json
                 '''
             }
         }
@@ -120,7 +122,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage('Prod E2E') {
             agent {
                 docker {
@@ -128,9 +130,9 @@ pipeline {
                     reuseNode true
                 }
             }
-
+*/
             environment {
-                CI_ENVIRONMENT_URL = '2ec10204-01f0-4172-8443-031d023cf50d'
+                CI_ENVIRONMENT_URL = 'https://peaceful-daffodil-303af5.netlify.app'
             }
 
             steps {
