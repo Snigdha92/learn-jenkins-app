@@ -46,9 +46,6 @@ pipeline {
                  }
 
                 stage('E2E') {
-                    agent {
-                          }
-
                     steps {
                         sh '''
                             npm install serve
@@ -68,10 +65,7 @@ pipeline {
         }
 
         stage('Deploy staging') {
-            agent {
-                  }
-
-            environment {
+             environment {
                 CI_ENVIRONMENT_URL = 'STAGING_URL_TO_BE_SET'
             }
 
@@ -103,10 +97,7 @@ pipeline {
         }
 
         stage('Deploy prod') {
-            agent {
-                  }
-
-            environment {
+             environment {
                 CI_ENVIRONMENT_URL = '2ec10204-01f0-4172-8443-031d023cf50d'
             }
 
